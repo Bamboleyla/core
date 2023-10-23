@@ -1,0 +1,10 @@
+# Окружение
+/.env
+/yarn-error.log
+
+# DB
+/pgdata/
+
+# Исключения в backend
+/backend/dist/
+/backend/node_modules/
