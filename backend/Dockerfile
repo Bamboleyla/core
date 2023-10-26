@@ -1,11 +1,11 @@
-FROM node:14-alpine AS builder
+FROM node AS builder
 WORKDIR /app
 COPY /*.json ./
 COPY . .
-RUN yarn run build
+RUN yarn build
 
-FROM node:14-alpine
+FROM node:20-alpine
 WORKDIR /app
 COPY --from=builder /app ./
 EXPOSE 5000
-CMD ["yarn", "run", "start:prod"]
+CMD ["yarn", "start:prod"]
