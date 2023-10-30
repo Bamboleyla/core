@@ -39,4 +39,9 @@ export class UserEntity {
   @Field({ nullable: true })
   @Column({ type: 'enum', enum: Role, nullable: true })
   role: Role | null; //Роль пользователя, может быть null в таком случае, если роль пользователя еще не назначена
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  //TODO поле не должно иметь null, как это так у тебя пользователи без пароля
+  password: string; //Пароль пользователя
 }

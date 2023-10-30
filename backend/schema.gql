@@ -5,6 +5,7 @@
 input CreateUserInput {
   email: String!
   name: String!
+  password: String!
 }
 
 """
@@ -34,6 +35,7 @@ type UserEntity {
   email: String!
   id: ID!
   name: String!
+  password: String
   role: Float
   updatedAt: DateTime!
 }
