@@ -32,9 +32,4 @@ export class UserResolver {
   async getOneUser(@Args('id') id: number): Promise<UserEntity> {
     return await this.userService.getUserById(id);
   }
-
-  @Query(() => [UserEntity])
-  async getAllUsers(): Promise<UserEntity[]> {
-    return await this.userService.getAllUsers();
-  }
 }

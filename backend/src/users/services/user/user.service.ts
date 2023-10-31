@@ -13,7 +13,12 @@ export class UserService {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>
   ) {}
-
+  /**
+   * Метод для создания нового пользователя
+   *
+   * @param createUserInput объект, содержащий информацию о новом пользователе
+   * @returns данные о созданном пользователе
+   */
   async createUser(createUserInput: CreateUserInput): Promise<UserEntity> {
     //1.Прежде чем создать нового пользователя, проверяем, существует ли уже пользователь с таким email
     const existingUser = await this.userRepository.findOne({
@@ -39,14 +44,17 @@ export class UserService {
   async getUserById(id: number): Promise<UserEntity> {
     return await this.userRepository.findOne({ where: { id } });
   }
-
-  async getAllUsers(): Promise<UserEntity[]> {
-    return await this.userRepository.find();
-  }
-
+  /**
+   * Удаляет пользователя из базы данных.
+   *
+   * @param {number} id - ID пользователя, которого нужно удалить.
+   * @return {Promise<number>} Количество затронутых строк в базе данных.
+   */
   async removeUser(id: number): Promise<number> {
-    await this.userRepository.delete({ id });
-    return id;
+    // Удаляем пользователя из базы данных
+    const result = await this.userRepository.delete({ id });
+    // Возвращаем количество затронутых строк
+    return result.affected;
   }
 
   async updateUser(updateUserInput: UpdateUserInput): Promise<UserEntity> {
@@ -55,5 +63,15 @@ export class UserService {
       { ...updateUserInput }
     );
     return await this.getUserById(updateUserInput.id);
+  }
+
+  /**
+   * Получает сущность пользователя на основе его электронной почты.
+   *
+   * @param {string} email - Электронная почта пользователя.
+   * @return {Promise<UserEntity>} Промис, который разрешается в сущность пользователя.
+   */
+  async getUserByEmail(email: string): Promise<UserEntity> {
+    return await this.userRepository.findOne({ where: { email } });
   }
 }
