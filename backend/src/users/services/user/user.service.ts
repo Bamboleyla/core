@@ -4,8 +4,8 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 import { UserEntity } from '../../entities/user.entity';
-import { CreateUserInput } from '../../inputs/create-user.input';
-import { UpdateUserInput } from '../../inputs/update-user.input';
+import { CreateUserInput } from '../../dto/create-user.input';
+import { UpdateUserInput } from '../../dto/update-user.input';
 
 @Injectable()
 export class UserService {
