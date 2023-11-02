@@ -13,3 +13,6 @@
 # Исключения в backend
 /backend/dist/
 /backend/node_modules/
+
+# Исключения в frontend
+/frontend/node_modules/
