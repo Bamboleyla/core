@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import bg from "@/public/image/SignInBG.jpg";
+import bg from "@/public/image/signInBG.png";
 import { Button, Form, Input } from "antd";
 import Link from "next/link";
 

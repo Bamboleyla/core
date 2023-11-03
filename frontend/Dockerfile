@@ -1,5 +1,5 @@
 # Dockerfile
-FROM node AS builder
+FROM node:20-alpine AS builder
 WORKDIR /app
 
 # Копируем файлы приложения
@@ -10,11 +10,11 @@ COPY . .
 RUN yarn build
 
 # Создаем новый образ
-FROM node
+FROM node:20-alpine
 WORKDIR /app
 
 # Копируем собранные файлы из образа сборки
 COPY --from=builder /app ./
-EXPOSE 5000
+EXPOSE 3000
 # Запускаем приложение
-CMD ["yarn", "start:prod"]
+CMD ["yarn", "start"]
