@@ -30,7 +30,7 @@ type Mutation {
 
 type Query {
   getAllUsers: [UserEntity!]!
-  getOneUser(id: Float!): UserEntity!
+  getOneUser(id: ID!): UserEntity!
   logIn(LogInInput: LogInInput!): LogInResponse!
 }
 

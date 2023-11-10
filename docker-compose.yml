@@ -41,3 +41,5 @@ services:
     restart: unless-stopped
     ports:
       - "${FRONTEND_PORT}:3000"
+    environment:
+      - GRAPHQL_API=${GRAPHQL_API}
