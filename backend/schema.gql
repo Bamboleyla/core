@@ -23,7 +23,7 @@ type LogInResponse {
 }
 
 type Mutation {
-  createUser(createUser: CreateUserInput!): UserEntity!
+  createUser(createUser: CreateUserInput!): LogInResponse!
   removeUser(id: Float!): Float!
   updateUser(updateUser: UpdateUserInput!): UserEntity!
 }

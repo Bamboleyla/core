@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "backend": "cd backend && yarn start:dev",
-    "frontend": "cd frontend && yarn start"
+    "frontend": "cd frontend && yarn dev"
   },
   "dependencies": {}
 }

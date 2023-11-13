@@ -2,19 +2,13 @@ import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { UserService } from '../services/user/user.service';
 import { UserEntity } from '../entities/user.entity';
-import { CreateUserInput } from '../dto/create-user.input';
+import { CreateUserInput } from '../../auth/dto/create-user.input';
 import { UpdateUserInput } from '../dto/update-user.input';
+import { LogInResponse } from 'src/auth/dto/logIn-response';
 
 @Resolver('User')
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
-
-  @Mutation(() => UserEntity)
-  async createUser(
-    @Args('createUser') createUserInput: CreateUserInput
-  ): Promise<UserEntity> {
-    return await this.userService.createUser(createUserInput);
-  }
 
   @Mutation(() => UserEntity)
   async updateUser(
