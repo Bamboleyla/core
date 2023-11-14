@@ -23,15 +23,15 @@ type LogInResponse {
 }
 
 type Mutation {
-  createUser(createUser: CreateUserInput!): LogInResponse!
-  removeUser(id: Float!): Float!
-  updateUser(updateUser: UpdateUserInput!): UserEntity!
+  AUTH_createUser(createUser: CreateUserInput!): LogInResponse!
+  USER_remove(id: Float!): Float!
+  USER_update(updateUser: UpdateUserInput!): UserEntity!
 }
 
 type Query {
-  getAllUsers: [UserEntity!]!
-  getOneUser(id: ID!): UserEntity!
-  logIn(LogInInput: LogInInput!): LogInResponse!
+  AUTH_logIn(LogInInput: LogInInput!): LogInResponse!
+  USERS_getAll: [UserEntity!]!
+  USER_get(id: ID!): UserEntity!
 }
 
 input UpdateUserInput {

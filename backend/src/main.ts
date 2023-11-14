@@ -13,6 +13,8 @@ async function bootstrap() {
   const config = await app.get(ConfigService);
   //запускаем приложение на адресе
   const port = config.get<number>('API_PORT');
+  // включаем CORS
+  app.enableCors(); //TODO неужели без этого не обойтись?
   //Ждем запуск приложения
   await app.listen(port || 3000, () => {
     console.log(`App started on port: ${port}`);

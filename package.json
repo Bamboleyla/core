@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "backend": "cd backend && yarn start:dev",
-    "frontend": "cd frontend && yarn dev"
+    "server": "cd backend && yarn start:dev",
+    "client": "cd frontend && yarn dev",
+    "dev": "concurrently \"yarn server\" \"yarn client\""
   },
   "dependencies": {}
 }

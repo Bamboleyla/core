@@ -27,7 +27,7 @@ export class AuthResolver {
    * @param {Context} context - Контекст запроса, после обработки запроса защитником LocalAuthGuard.
    * @return {Promise<LogInResponse>} Ответ от операции входа.
    */
-  async logIn(
+  async AUTH_logIn(
     @Args('LogInInput') logInInput: LogInInput,
     @Context() context
   ): Promise<LogInResponse> {
@@ -36,7 +36,7 @@ export class AuthResolver {
 
   @Mutation(() => LogInResponse)
   //Вход для создания нового пользователя и получения токена авторизованного пользователя.
-  async createUser(
+  async AUTH_createUser(
     @Args('createUser') createUserInput: CreateUserInput
   ): Promise<LogInResponse> {
     return await this.authService.createUser(createUserInput);
