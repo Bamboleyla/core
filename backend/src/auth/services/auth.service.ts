@@ -42,6 +42,7 @@ export class AuthService {
     //4.Возвращаем пользователя
     return true;
   }
+
   /**Возвращает JWT-токен доступа для пользователя после успешной авторизации.
    *
    * @param {UserEntity} user - Объект пользователя, содержащий email и пароль.
@@ -51,6 +52,7 @@ export class AuthService {
     const payload = { user_id: id }; //В токене будет храниться только id пользователя
     return { access_token: this.jwtService.sign(payload) };
   }
+
   /**Метод для создания нового пользователя
    *
    * @param createUserInput объект, содержащий информацию о новом пользователе
@@ -74,7 +76,9 @@ export class AuthService {
       ...createUserInput,
       password: hashedPassword,
     });
-    //4.Возвращаем токен для нового пользователя
+    //4.Сохраняем нового пользователя
+    await this.userRepository.save(newUser);
+    //5.Возвращаем токен для нового пользователя
     return await this.getToken(newUser.id);
   }
 }

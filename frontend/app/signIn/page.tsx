@@ -4,7 +4,8 @@ import bg from "@/public/image/signInBG.png";
 import { Button, Form, Input } from "antd";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { AUTH_createUser } from "@/graphql/queries/entities/AUTH/logIn";
+import { AUTH_createUser } from "@/graphql/mutations/AUTH_CreateUser";
+import { useRouter } from "next/navigation";
 
 type FieldType = {
   firstName?: string;
@@ -14,6 +15,7 @@ type FieldType = {
 };
 
 const SignIn = () => {
+  const router = useRouter();
   const [data, setData] = useState({ email: "", password: "", name: "" });
   const onFinish = (values: any) => {
     const { email, password, firstName } = values;
@@ -21,7 +23,8 @@ const SignIn = () => {
   };
   useEffect(() => {
     async function fetchData() {
-      await AUTH_createUser(data);
+      const result = await AUTH_createUser(data);
+      result && router.push("/office");
     }
     data.email !== "" && fetchData();
   });

@@ -29,11 +29,17 @@ export const AUTH_createUser = async (params: ICreateUser_params) => {
       }
     );
     localStorage.setItem("access_token", AUTH_createUser.access_token);
+    return true;
   } catch (error: any) {
-    console.error(error);
+    const errorMessage = error.message;
+    const errorObject = JSON.parse(
+      errorMessage.substring(errorMessage.indexOf(":") + 1)
+    );
     notification.error({
       message: "Ошибка регистрации",
-      description: error.massage,
+      description: errorObject.response.errors[0].message,
     });
+    console.error(`AUTH_createUser: ${errorObject.response}`);
+    return false;
   }
 };
