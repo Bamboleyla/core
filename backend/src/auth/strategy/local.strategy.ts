@@ -1,6 +1,6 @@
 import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { UserService } from 'src/users/services/user/user.service';
 
@@ -10,7 +10,10 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     private readonly authService: AuthService,
     private readonly userService: UserService
   ) {
-    super();
+    //По умолчанию защитник ожидает свойство usernameField в настройках passport, но для нашего удобства мы будем использовать email
+    super({
+      usernameField: 'email',
+    });
   }
   /**
    * Метод для входа пользователя, который проверяет его email и пароль, на достоверность
@@ -20,15 +23,8 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
    * @returns элемент UserEntity
    */
   async validate(email: string, password: string) {
-    //Проверяем пользователя, проверяя его email и пароль, на достоверность
-    const correct = await this.authService.isTheUserDataCorrect(
-      email,
-      password
-    );
-    //Если его данные недостоверны, то выбрасываем ошибку
-    if (!correct) {
-      throw new UnauthorizedException();
-    }
+    //Проверяем пользователя, проверяя его email и пароль, на достоверность, если они недостоверны, то метод выбрасывает ошибку
+    await this.authService.isTheUserDataCorrect(email, password);
     //Возвращаем пользователя
     return await this.userService.getUserByEmail(email);
   }
