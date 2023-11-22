@@ -16,6 +16,28 @@ const items: MenuProps["items"] = [
     icon: <BookOutlined />,
     children: [
       {
+        label: "Предприятие",
+        key: "company",
+        children: [
+          {
+            label: "Организации",
+            key: "organizations",
+          },
+          {
+            label: "Склады",
+            key: "warehouses",
+          },
+          {
+            label: "Должности организации",
+            key: "positions",
+          },
+          {
+            label: "Сотрудники организации",
+            key: "staff",
+          },
+        ],
+      },
+      {
         label: "Товары",
         key: "products",
       },
@@ -99,6 +121,8 @@ export const HeaderOffice: React.FC = () => {
       router.push("/office/products");
     } else if (e.key === "services") {
       router.push("/office/services");
+    } else if (e.key === "organizations") {
+      router.push("/office/organizations");
     }
   };
 

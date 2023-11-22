@@ -1,11 +1,27 @@
+"use client";
 import { Header } from "@/components/Header";
 import { OurRates } from "@/components/OurRates";
 import { Start } from "@/components/Start";
 import { WhatIs } from "@/components/WhatIs";
 import { WhoIsItFor } from "@/components/WhoIsItFor";
 import { YouWillBeAble } from "@/components/YouWillBeAble";
+import { AUTH_token } from "@/graphql/queries/AUTH_Token";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-const Welcome = async () => {
+const Welcome = () => {
+  //Создаем роутер который будем использовать для перевода на страницу офиса всех авторизованных пользователей
+  const router = useRouter();
+
+  useEffect(() => {
+    //Проверяем авторизован ли пользователь, если да, то переводим на страницу офиса, если нет то нечего не делаем
+    const isUserAuthorized = async () => {
+      const result = await AUTH_token();
+      result && router.push("/office");
+    };
+    isUserAuthorized();
+  });
+
   return (
     <div className="flex">
       <Header />

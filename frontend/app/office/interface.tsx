@@ -1,13 +1,12 @@
-"use client";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Flex, Tooltip } from "antd";
-import { useRouter, usePathname } from "next/navigation";
 
 interface Props {
-  page: "clients" | "suppliers" | "products" | "services";
+  page: "clients" | "suppliers" | "products" | "services" | "organizations";
+  create: (isModalOpen: boolean) => void;
 }
 
-export const Interface = ({ page }: Props) => {
+export const Interface = ({ page, create }: Props) => {
   const config = {
     create: "",
     path: {
@@ -15,15 +14,15 @@ export const Interface = ({ page }: Props) => {
     },
   };
 
-  const router = useRouter();
-  const pathName = usePathname();
-
   switch (page) {
     case "clients":
       config.create = "Создать нового клиента";
       break;
     case "services":
       config.create = "Создать новую услугу";
+      break;
+    case "organizations":
+      config.create = "Создать новую организацию";
   }
 
   return (
@@ -33,7 +32,7 @@ export const Interface = ({ page }: Props) => {
           icon={
             <PlusOutlined
               style={{ color: "white" }}
-              onClick={() => router.push(pathName + "/create")}
+              onClick={() => create(true)}
             />
           }
         />

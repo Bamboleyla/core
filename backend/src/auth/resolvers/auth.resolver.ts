@@ -9,6 +9,7 @@ import { CreateUserInput } from '../dto/create-user.input';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { AuthService } from './../services/auth.service';
 import { Repository } from 'typeorm';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
 @Resolver('Auth')
 export class AuthResolver {
@@ -32,6 +33,15 @@ export class AuthResolver {
     @Context() context
   ): Promise<LogInResponse> {
     return await this.authService.getToken(context.user.id);
+  }
+
+  @Query(() => Boolean)
+  @UseGuards(JwtAuthGuard)
+  /** Проверка токена пользователя, если токен валидный, то вернет true. Если нет, то @UseGuards(JwtAuthGuard) выбросит ошибку.
+   * @return {Promise<boolean>}
+   */
+  async AUTH_token(): Promise<boolean> {
+    return true;
   }
 
   @Mutation(() => LogInResponse)
