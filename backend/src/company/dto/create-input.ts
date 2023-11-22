@@ -1,76 +1,47 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
+import { IsIn, IsNotEmpty, Length } from 'class-validator';
 
-@ObjectType()
-@Entity('companies')
-export class CompaniesEntity {
-  @Field(() => ID)
-  @PrimaryGeneratedColumn()
-  id: number; //Идентификатор компании
-
+@InputType()
+export class CreateCompanyInput {
   @Field()
-  @CreateDateColumn()
-  createdAt: Date; //Дата создания
-
-  @Field()
-  @UpdateDateColumn()
-  updatedAt: Date; //Дата обновления
-
-  @Field()
-  @Column()
-  author: string; //Идентификатор пользователя который создал новую организацию
-
-  @Field()
-  @Column()
+  @IsIn(['Юр. лицо', 'Физ. лицо'], {
+    message: 'Тип должен быть "Юр. лицо" или "Физ. лицо"',
+  })
   type: string; //Тип организации (Физ. лицо, Юр. лицо)
 
   @Field()
-  @Column()
+  @IsNotEmpty({ message: 'Поле "name" не может быть пустым' })
   name: string; //Название организации (ООО "Компания")
 
   @Field()
-  @Column()
+  @Length(10, 10, { message: 'ИНН должен содержать 10 цифр' })
   inn: string | null; //ИНН организации
 
   @Field()
-  @Column()
-  country: string | null; //Страна организации
+  @IsIn(['Россия'], { message: 'Указана неправильная страна' })
+  country: string; //Страна организации
 
   @Field()
-  @Column()
   index: string | null; //Индекс организации
 
   @Field()
-  @Column()
   region: string | null; //Регион в которой находится организация
 
   @Field()
-  @Column()
   district: string | null; //Район в котором находится организация
 
   @Field()
-  @Column()
   city: string | null; //Город в котором находится организация
 
   @Field()
-  @Column()
   settlement: string | null; //Населенный пункт в котором находится организация
 
   @Field()
-  @Column()
   street: string | null; //Улица по которой находится организация
 
   @Field()
-  @Column()
   house: string | null; //Номер дома в котором находится организация
 
   @Field()
-  @Column()
   apartment: string | null; //Номер квартиры в которой находится организация
 }

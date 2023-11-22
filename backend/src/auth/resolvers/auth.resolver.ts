@@ -8,14 +8,12 @@ import { LogInInput } from '../dto/logIn-input';
 import { CreateUserInput } from '../dto/create-user.input';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { AuthService } from './../services/auth.service';
-import { Repository } from 'typeorm';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
 @Resolver('Auth')
 export class AuthResolver {
   constructor(
     @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
     private readonly authService: AuthService
   ) {}
 

@@ -69,7 +69,7 @@ export class AuthService {
         'Пользователь с таким email уже существует'
       );
     }
-    //2.Хэшируем пароль
+    //2.Хэшируем пароль, потому что он будет храниться в базе данных
     const hashedPassword = await bcrypt.hash(createUserInput.password, 10);
     //3.Создаем нового пользователя
     const newUser = this.userRepository.create({

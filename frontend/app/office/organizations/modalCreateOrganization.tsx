@@ -23,6 +23,7 @@ export const ModalCreateOrganization = ({ setIsModalOpen }: Props) => {
             values[key] = null;
           }
         }
+        console.log("Success:", values);
         //Закрываем модальное окно
         setIsModalOpen(false);
       })
@@ -135,7 +136,7 @@ export const ModalCreateOrganization = ({ setIsModalOpen }: Props) => {
           rules={[
             {
               pattern: /^[0-9]+$/,
-              message: "ИНН должен состоять только из цифр",
+              message: "Индекс должен состоять только из цифр",
             },
           ]}
           className="w-4/6 sm:w-5/12 lg:w-3/12 2xl:w-96"

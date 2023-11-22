@@ -2,6 +2,25 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateCompanyInput {
+  apartment: String!
+  city: String!
+  country: String!
+  district: String!
+  house: String!
+  index: String!
+  inn: String!
+  name: String!
+  region: String!
+  settlement: String!
+  street: String!
+  type: String!
+}
+
+type CreateCompanyResponse {
+  id: ID!
+}
+
 input CreateUserInput {
   email: String!
   name: String!
@@ -30,6 +49,7 @@ type LogInResponse {
 
 type Mutation {
   AUTH_createUser(createUser: CreateUserInput!): LogInResponse!
+  COMPANY_create(data: CreateCompanyInput!): CreateCompanyResponse!
   USER_remove(id: Float!): Float!
   USER_update(updateUser: UpdateUserInput!): UserEntity!
 }
