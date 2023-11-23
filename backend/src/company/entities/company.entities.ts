@@ -22,9 +22,9 @@ export class CompaniesEntity {
   @UpdateDateColumn()
   updatedAt: Date; //Дата обновления
 
-  @Field()
-  @Column()
-  author: string; //Идентификатор пользователя который создал новую организацию
+  // @Field()
+  // @Column()
+  // author: string; //Идентификатор пользователя который создал новую организацию
 
   @Field()
   @Column()
@@ -35,42 +35,42 @@ export class CompaniesEntity {
   name: string; //Название организации (ООО "Компания")
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   inn: string | null; //ИНН организации
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   country: string | null; //Страна организации
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   index: string | null; //Индекс организации
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   region: string | null; //Регион в которой находится организация
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   district: string | null; //Район в котором находится организация
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   city: string | null; //Город в котором находится организация
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   settlement: string | null; //Населенный пункт в котором находится организация
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   street: string | null; //Улица по которой находится организация
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   house: string | null; //Номер дома в котором находится организация
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   apartment: string | null; //Номер квартиры в которой находится организация
 }

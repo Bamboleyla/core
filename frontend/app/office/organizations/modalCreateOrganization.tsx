@@ -1,4 +1,5 @@
 "use client";
+import { COMPANY_create } from "@/graphql/mutations/COMPANY_Create";
 import { Form, Input, Modal, Radio, notification } from "antd";
 import { useState } from "react";
 
@@ -17,13 +18,17 @@ export const ModalCreateOrganization = ({ setIsModalOpen }: Props) => {
     form
       .validateFields()
       .then((values) => {
-        //Форма возвращает объект в котором пустые поля формы имеют значения undefined, нам для удобства хранения в БД надо заменить их на null
-        for (const key in values) {
-          if (values[key] === undefined) {
+        //Обрабатываем значения формы, свойства с пустыми значениями заменяем на null
+        Object.keys(values).forEach((key) => {
+          if (!values[key]) {
             values[key] = null;
           }
-        }
-        console.log("Success:", values);
+        });
+        //Отправляем запрос для создания организации
+        const create = async () => {
+          await COMPANY_create(values);
+        };
+        create();
         //Закрываем модальное окно
         setIsModalOpen(false);
       })

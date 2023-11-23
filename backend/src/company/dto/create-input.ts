@@ -13,7 +13,7 @@ export class CreateCompanyInput {
   @IsNotEmpty({ message: 'Поле "name" не может быть пустым' })
   name: string; //Название организации (ООО "Компания")
 
-  @Field()
+  @Field({ nullable: true })
   @Length(10, 10, { message: 'ИНН должен содержать 10 цифр' })
   inn: string | null; //ИНН организации
 
@@ -21,27 +21,27 @@ export class CreateCompanyInput {
   @IsIn(['Россия'], { message: 'Указана неправильная страна' })
   country: string; //Страна организации
 
-  @Field()
+  @Field({ nullable: true })
   index: string | null; //Индекс организации
 
-  @Field()
+  @Field({ nullable: true })
   region: string | null; //Регион в которой находится организация
 
-  @Field()
+  @Field({ nullable: true })
   district: string | null; //Район в котором находится организация
 
-  @Field()
+  @Field({ nullable: true })
   city: string | null; //Город в котором находится организация
 
-  @Field()
+  @Field({ nullable: true })
   settlement: string | null; //Населенный пункт в котором находится организация
 
-  @Field()
+  @Field({ nullable: true })
   street: string | null; //Улица по которой находится организация
 
-  @Field()
+  @Field({ nullable: true })
   house: string | null; //Номер дома в котором находится организация
 
-  @Field()
+  @Field({ nullable: true })
   apartment: string | null; //Номер квартиры в которой находится организация
 }

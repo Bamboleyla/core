@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CompaniesEntity } from '../entities/company.entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
 import { CreateCompanyInput } from '../dto/create-input';
-import { CreateCompanyResponse } from '../dto/create-response';
+import { CompaniesEntity } from '../entities/company.entities';
 
 @Injectable()
 export class CompanyService {
@@ -16,15 +16,19 @@ export class CompanyService {
    * @param data данные новой организации
    * @returns ID новой организации
    */
-  async create(
-    data: CreateCompanyInput,
-    userID: number
-  ): Promise<CreateCompanyResponse> {
+  async create(data: CreateCompanyInput, userID: number): Promise<number> {
     //1.Создаем новою организацию
     const newCompany = this.companyRepository.create(data);
     //2.Сохраняем новую организацию
     await this.companyRepository.save(newCompany);
     //3.Возвращаем ID новой организации
-    return { id: newCompany.id };
+    return newCompany.id;
+  }
+  /**Метод для получения всех организации
+   *
+   * @returns Массив всех организации
+   */
+  async getAll(): Promise<CompaniesEntity[]> {
+    return await this.companyRepository.find();
   }
 }

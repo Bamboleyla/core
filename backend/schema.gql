@@ -2,12 +2,14 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input CreateCompanyInput {
+type CompaniesEntity {
   apartment: String!
   city: String!
   country: String!
+  createdAt: DateTime!
   district: String!
   house: String!
+  id: ID!
   index: String!
   inn: String!
   name: String!
@@ -15,10 +17,22 @@ input CreateCompanyInput {
   settlement: String!
   street: String!
   type: String!
+  updatedAt: DateTime!
 }
 
-type CreateCompanyResponse {
-  id: ID!
+input CreateCompanyInput {
+  apartment: String
+  city: String
+  country: String!
+  district: String
+  house: String
+  index: String
+  inn: String
+  name: String!
+  region: String
+  settlement: String
+  street: String
+  type: String!
 }
 
 input CreateUserInput {
@@ -49,7 +63,7 @@ type LogInResponse {
 
 type Mutation {
   AUTH_createUser(createUser: CreateUserInput!): LogInResponse!
-  COMPANY_create(data: CreateCompanyInput!): CreateCompanyResponse!
+  COMPANY_create(data: CreateCompanyInput!): Float!
   USER_remove(id: Float!): Float!
   USER_update(updateUser: UpdateUserInput!): UserEntity!
 }
@@ -57,6 +71,7 @@ type Mutation {
 type Query {
   AUTH_logIn(LogInInput: LogInInput!): LogInResponse!
   AUTH_token: Boolean!
+  COMPANY_getAll: [CompaniesEntity!]!
   USERS_getAll: [UserEntity!]!
   USER_get(id: ID!): UserEntity!
 }
