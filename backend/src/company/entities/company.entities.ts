@@ -2,10 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { UserEntity } from 'src/users/entities/user.entity';
+import { StaffMembers } from './staffMembers.entities';
 
 @ObjectType()
 @Entity('companies')
@@ -22,9 +25,9 @@ export class CompaniesEntity {
   @UpdateDateColumn()
   updatedAt: Date; //Дата обновления
 
-  // @Field()
-  // @Column()
-  // author: string; //Идентификатор пользователя который создал новую организацию
+  @Field()
+  @ManyToOne(() => UserEntity)
+  author: UserEntity; //Пользователь который создал новую организацию
 
   @Field()
   @Column()
@@ -73,4 +76,8 @@ export class CompaniesEntity {
   @Field()
   @Column({ nullable: true })
   apartment: string | null; //Номер квартиры в которой находится организация
+
+  @Column({ type: 'json' })
+  @Field(() => StaffMembers)
+  staff: StaffMembers; //Сотрудники в организации
 }

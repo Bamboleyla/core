@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsIn, IsNotEmpty, Length } from 'class-validator';
+import { IsIn, IsNotEmpty, IsOptional, Length } from 'class-validator';
 
 @InputType()
 export class CreateCompanyInput {
@@ -14,6 +14,7 @@ export class CreateCompanyInput {
   name: string; //Название организации (ООО "Компания")
 
   @Field({ nullable: true })
+  @IsOptional() //Если придет null, то проверка на длину не произойдет
   @Length(10, 10, { message: 'ИНН должен содержать 10 цифр' })
   inn: string | null; //ИНН организации
 

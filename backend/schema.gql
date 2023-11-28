@@ -4,6 +4,7 @@
 
 type CompaniesEntity {
   apartment: String!
+  author: UserEntity!
   city: String!
   country: String!
   createdAt: DateTime!
@@ -15,6 +16,7 @@ type CompaniesEntity {
   name: String!
   region: String!
   settlement: String!
+  staff: StaffMembers!
   street: String!
   type: String!
   updatedAt: DateTime!
@@ -64,8 +66,8 @@ type LogInResponse {
 type Mutation {
   AUTH_createUser(createUser: CreateUserInput!): LogInResponse!
   COMPANY_create(data: CreateCompanyInput!): Float!
+  COMPANY_removeAll: Boolean!
   USER_remove(id: Float!): Float!
-  USER_update(updateUser: UpdateUserInput!): UserEntity!
 }
 
 type Query {
@@ -76,10 +78,10 @@ type Query {
   USER_get(id: ID!): UserEntity!
 }
 
-input UpdateUserInput {
-  email: String
-  id: ID!
-  name: String
+type StaffMembers {
+  administrators: [UserEntity!]!
+  masters: [UserEntity!]!
+  owner: [UserEntity!]!
 }
 
 type UserEntity {
@@ -88,6 +90,5 @@ type UserEntity {
   id: ID!
   name: String!
   password: String
-  role: Float
   updatedAt: DateTime!
 }

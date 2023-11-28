@@ -15,6 +15,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: any) {
     //Возвращаем объект пользователя, в котором содержится только его id
-    return { user_id: payload.id };
+    return { user_id: payload.user_id };
   }
 }

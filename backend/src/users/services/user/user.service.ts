@@ -1,19 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 
 import { UserEntity } from '../../entities/user.entity';
-import { UpdateUserInput } from '../../dto/update-user.input';
+import { CompaniesEntity } from 'src/company/entities/company.entities';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>
+    private readonly User: Repository<UserEntity>,
+    @InjectRepository(CompaniesEntity)
+    private readonly Companies: Repository<CompaniesEntity>
   ) {}
 
   async getUserById(id: number): Promise<UserEntity> {
-    return await this.userRepository.findOne({ where: { id } });
+    return await this.User.findOne({ where: { id } });
   }
   /**Удаляет пользователя из базы данных.
    *
@@ -21,18 +23,15 @@ export class UserService {
    * @return {Promise<number>} Количество затронутых строк в базе данных.
    */
   async removeUser(id: number): Promise<number> {
+    const company = await this.Companies.findOne({
+      where: { author: { id } },
+    } as FindOneOptions<CompaniesEntity>);
+    if (company) company.author = null;
+    await this.Companies.save(company);
     // Удаляем пользователя из базы данных
-    const result = await this.userRepository.delete({ id });
+    const result = await this.User.delete({ id });
     // Возвращаем количество затронутых строк
     return result.affected;
-  }
-
-  async updateUser(updateUserInput: UpdateUserInput): Promise<UserEntity> {
-    await this.userRepository.update(
-      { id: updateUserInput.id },
-      { ...updateUserInput }
-    );
-    return await this.getUserById(updateUserInput.id);
   }
 
   /**Получает сущность пользователя на основе его электронной почты.
@@ -41,6 +40,6 @@ export class UserService {
    * @return {Promise<UserEntity>} Промис, который разрешается в сущность пользователя.
    */
   async getUserByEmail(email: string): Promise<UserEntity> {
-    return await this.userRepository.findOne({ where: { email } });
+    return await this.User.findOne({ where: { email } });
   }
 }

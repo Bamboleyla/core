@@ -7,12 +7,6 @@ import {
 } from 'typeorm';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
-export enum Role {
-  owner, //Владелец
-  admin, //Администратор
-  master, //Мастер
-}
-
 @ObjectType()
 @Entity('users')
 export class UserEntity {
@@ -35,10 +29,6 @@ export class UserEntity {
   @Field()
   @Column()
   name: string; //Имя пользователя
-
-  @Field({ nullable: true })
-  @Column({ type: 'enum', enum: Role, nullable: true })
-  role: Role | null; //Роль пользователя, может быть null в таком случае, если роль пользователя еще не назначена
 
   @Field({ nullable: true })
   @Column({ nullable: true })
