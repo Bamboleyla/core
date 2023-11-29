@@ -74,11 +74,13 @@ type Query {
   AUTH_logIn(LogInInput: LogInInput!): LogInResponse!
   AUTH_token: Boolean!
   COMPANY_getAll: [CompaniesEntity!]!
+  SUPPORT_getAllCompanies: [CompaniesEntity!]!
   USERS_getAll: [UserEntity!]!
   USER_get(id: ID!): UserEntity!
 }
 
 type StaffMembers {
+  accountant: [UserEntity!]!
   administrators: [UserEntity!]!
   masters: [UserEntity!]!
   owner: [UserEntity!]!
@@ -89,6 +91,6 @@ type UserEntity {
   email: String!
   id: ID!
   name: String!
-  password: String
+  password: String!
   updatedAt: DateTime!
 }

@@ -30,9 +30,10 @@ export class CompanyService {
     const author = await this.Users.findOne({ where: { id: userID } });
     //2. Создаем свойство staff
     const staff = {
-      owner: [],
-      administrators: [],
-      masters: [],
+      owner: [], //Список основателей
+      accountant: [], //Список бухгалтеров
+      administrators: [], //Список администраторов
+      masters: [], //Список мастеров
     };
     //3. Создаем новою организацию
     const newCompany = this.Companies.create({
@@ -51,8 +52,11 @@ export class CompanyService {
    *
    * @returns Массив всех организации
    */
-  async getAll(): Promise<CompaniesEntity[]> {
-    return await this.Companies.find();
+  async getAll(userID: number): Promise<CompaniesEntity[]> {
+    return await this.Companies.createQueryBuilder('company')
+      .leftJoinAndSelect('company.author', 'author')
+      .where('author.id = :userID', { userID })
+      .getMany();
   }
   async removeAll(): Promise<boolean> {
     await this.Companies.delete({});

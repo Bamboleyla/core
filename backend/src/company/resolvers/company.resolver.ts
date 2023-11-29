@@ -1,14 +1,20 @@
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { UseGuards } from '@nestjs/common';
 
 import { CreateCompanyInput } from '../dto/create-input';
 import { CompaniesEntity } from '../entities/company.entities';
 import { CompanyService } from '../services/company.service';
-import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Resolver('Company')
 export class CompanyResolver {
-  constructor(private readonly companyService: CompanyService) {}
+  constructor(
+    @InjectRepository(CompaniesEntity)
+    private readonly Companies: Repository<CompaniesEntity>,
+    private readonly companyService: CompanyService
+  ) {}
 
   //Создание новой организации
   @Mutation(() => Number)
@@ -26,8 +32,15 @@ export class CompanyResolver {
     return await this.companyService.removeAll();
   }
   //Получение всех организации
-  @Query(() => [CompaniesEntity])
-  async COMPANY_getAll(): Promise<CompaniesEntity[]> {
-    return await this.companyService.getAll();
+  @Query(() => [CompaniesEntity]) //TODO Служебный запрос, незащищенный
+  async SUPPORT_getAllCompanies(): Promise<CompaniesEntity[]> {
+    return await this.Companies.find();
+  }
+  //Получение всех организации, на которые есть у пользователя права
+  @Query(() => [CompaniesEntity]) //TODO Служебный запрос, незащищенный
+  @UseGuards(JwtAuthGuard)
+  async COMPANY_getAll(@Context() context): Promise<CompaniesEntity[]> {
+    const result = await this.companyService.getAll(context.req.user.user_id);
+    return result;
   }
 }

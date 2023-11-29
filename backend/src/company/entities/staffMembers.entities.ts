@@ -11,6 +11,10 @@ export class StaffMembers {
 
   @Field(() => [UserEntity])
   @ManyToOne(() => UserEntity)
+  accountant: UserEntity[]; //Бухгалтера организации
+
+  @Field(() => [UserEntity])
+  @ManyToOne(() => UserEntity)
   administrators: UserEntity[]; //Администраторы организации
 
   @Field(() => [UserEntity])

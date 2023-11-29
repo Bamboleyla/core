@@ -30,8 +30,7 @@ export class UserEntity {
   @Column()
   name: string; //Имя пользователя
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  //TODO поле не должно иметь null, как это так у тебя пользователи без пароля
+  @Field()
+  @Column()
   password: string; //Пароль пользователя
 }

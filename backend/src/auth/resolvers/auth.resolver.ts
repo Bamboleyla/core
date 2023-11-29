@@ -1,21 +1,16 @@
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { LogInResponse } from '../dto/logIn-response';
 import { LogInInput } from '../dto/logIn-input';
 import { CreateUserInput } from '../dto/create-user.input';
-import { UserEntity } from 'src/users/entities/user.entity';
 import { AuthService } from './../services/auth.service';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
 @Resolver('Auth')
 export class AuthResolver {
-  constructor(
-    @InjectRepository(UserEntity)
-    private readonly authService: AuthService
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Query(() => LogInResponse)
   //Защищаем ресурс от пользователей, которых нет в базе
