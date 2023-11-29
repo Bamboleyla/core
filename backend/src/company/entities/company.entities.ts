@@ -37,43 +37,43 @@ export class CompaniesEntity {
   @Column()
   name: string; //Название организации (ООО "Компания")
 
-  @Field()
+  @Field({ nullable: true })
   @Column({ nullable: true })
   inn: string | null; //ИНН организации
 
   @Field()
   @Column({ nullable: true })
-  country: string | null; //Страна организации
+  country: string; //Страна организации
 
-  @Field()
+  @Field({ nullable: true })
   @Column({ nullable: true })
   index: string | null; //Индекс организации
 
-  @Field()
+  @Field({ nullable: true })
   @Column({ nullable: true })
   region: string | null; //Регион в которой находится организация
 
-  @Field()
+  @Field({ nullable: true })
   @Column({ nullable: true })
   district: string | null; //Район в котором находится организация
 
-  @Field()
+  @Field({ nullable: true })
   @Column({ nullable: true })
   city: string | null; //Город в котором находится организация
 
-  @Field()
+  @Field({ nullable: true })
   @Column({ nullable: true })
   settlement: string | null; //Населенный пункт в котором находится организация
 
-  @Field()
+  @Field({ nullable: true })
   @Column({ nullable: true })
   street: string | null; //Улица по которой находится организация
 
-  @Field()
+  @Field({ nullable: true })
   @Column({ nullable: true })
   house: string | null; //Номер дома в котором находится организация
 
-  @Field()
+  @Field({ nullable: true })
   @Column({ nullable: true })
   apartment: string | null; //Номер квартиры в которой находится организация
 

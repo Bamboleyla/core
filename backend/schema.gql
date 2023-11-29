@@ -3,21 +3,21 @@
 # ------------------------------------------------------
 
 type CompaniesEntity {
-  apartment: String!
+  apartment: String
   author: UserEntity!
-  city: String!
+  city: String
   country: String!
   createdAt: DateTime!
-  district: String!
-  house: String!
+  district: String
+  house: String
   id: ID!
-  index: String!
-  inn: String!
+  index: String
+  inn: String
   name: String!
-  region: String!
-  settlement: String!
+  region: String
+  settlement: String
   staff: StaffMembers!
-  street: String!
+  street: String
   type: String!
   updatedAt: DateTime!
 }
