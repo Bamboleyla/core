@@ -4,10 +4,20 @@ import { Form, Input, Modal, Radio, notification } from "antd";
 import { useState } from "react";
 
 interface Props {
-  setIsModalOpen: (isModalOpen: boolean) => void;
+  setIsModalOpen: (isModalOpen: boolean) => void; // Инициализируем состояние модального окна, которое регулирует отображение модального окна
+  setDataSource: (
+    dataSource: {
+      key: number; //Идентификатор строки
+      name: string; // Название организации
+      INN: string; // ИНН организации
+    }[]
+  ) => void; // Инициализируем состояние данных таблицы
 }
 //Модальное окно с формой для создания новой организации
-export const ModalCreateOrganization = ({ setIsModalOpen }: Props) => {
+export const ModalCreateOrganization = ({
+  setIsModalOpen,
+  setDataSource,
+}: Props) => {
   //Инициализируем форму
   const [form] = Form.useForm();
   //Инициализируем состояние ошибок, здесь будут хранится ошибки, которые возникли при валидации формы
@@ -24,9 +34,21 @@ export const ModalCreateOrganization = ({ setIsModalOpen }: Props) => {
             values[key] = null;
           }
         });
-        //Отправляем запрос для создания организации
+        //Отправляем запрос для создания организации и получения новых данных для таблицы
         const create = async () => {
-          await COMPANY_create(values);
+          //Делаем запрос
+          const result = await COMPANY_create(values);
+          //Если есть результат
+          if (result) {
+            //То преобразуем полученные данные в структуру для таблицы
+            const companies = result.map((company) => ({
+              key: company.id,
+              name: company.name,
+              INN: company.inn,
+            }));
+            //Обновляем состояние данных таблицы
+            setDataSource(companies);
+          }
         };
         create();
         //Закрываем модальное окно

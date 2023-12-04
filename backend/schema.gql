@@ -65,8 +65,7 @@ type LogInResponse {
 
 type Mutation {
   AUTH_createUser(createUser: CreateUserInput!): LogInResponse!
-  COMPANY_create(data: CreateCompanyInput!): Float!
-  COMPANY_removeAll: Boolean!
+  COMPANY_create(data: CreateCompanyInput!): [CompaniesEntity!]!
   USER_remove(id: Float!): Float!
 }
 
@@ -74,7 +73,6 @@ type Query {
   AUTH_logIn(LogInInput: LogInInput!): LogInResponse!
   AUTH_token: Boolean!
   COMPANY_getAll: [CompaniesEntity!]!
-  SUPPORT_getAllCompanies: [CompaniesEntity!]!
   USERS_getAll: [UserEntity!]!
   USER_get(id: ID!): UserEntity!
 }

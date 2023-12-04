@@ -42,7 +42,7 @@ export class CompaniesEntity {
   inn: string | null; //ИНН организации
 
   @Field()
-  @Column({ nullable: true })
+  @Column()
   country: string; //Страна организации
 
   @Field({ nullable: true })

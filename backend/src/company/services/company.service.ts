@@ -17,14 +17,17 @@ export class CompanyService {
   /**Метод для создания новой организации
    *
    * @param data данные новой организации
-   * @returns ID новой организации
+   * @returns список всех организации, где пользователь является автором
    */
-  async create(data: CreateCompanyInput, userID: number): Promise<number> {
+  async create(
+    data: CreateCompanyInput,
+    userID: number
+  ): Promise<CompaniesEntity[]> {
     /*Алгоритм:
     1.Для создания новой организации нужно создать автора, это пользователь из таблицы users, который создал организацию
     2.Нужно создать свойство staff, в котором будут храниться сотрудники организации. Свойство это системное и по этому не приходит в графе
     3.Создать новую организацию с добавлением автора и staff, сохраняем в базу
-    4.Возвращаем ID новой организации, для подтверждения клиенту, что создание прошло успешно
+    4.Возвращаем список всех организации, где присутствует пользователь в качестве автора
     */
     //1. Создаем автора
     const author = await this.Users.findOne({ where: { id: userID } });
@@ -45,8 +48,8 @@ export class CompanyService {
     //3.1. Сохраняем новую организацию
     await this.Companies.save(newCompany);
 
-    //4. Возвращаем ID новой организации
-    return newCompany.id;
+    //4. Возвращаем новый список организации где присутствует пользователь в качестве автора
+    return await this.getAll(userID);
   }
   /**Метод для получения всех организации
    *
@@ -57,9 +60,5 @@ export class CompanyService {
       .leftJoinAndSelect('company.author', 'author')
       .where('author.id = :userID', { userID })
       .getMany();
-  }
-  async removeAll(): Promise<boolean> {
-    await this.Companies.delete({});
-    return true;
   }
 }

@@ -17,27 +17,18 @@ export class CompanyResolver {
   ) {}
 
   //Создание новой организации
-  @Mutation(() => Number)
+  @Mutation(() => [CompaniesEntity])
   //Защищаем ресурс от пользователей, которых нет в базе
   @UseGuards(JwtAuthGuard)
   async COMPANY_create(
     @Args('data') data: CreateCompanyInput,
     @Context() context
-  ): Promise<number> {
+  ): Promise<CompaniesEntity[]> {
     return await this.companyService.create(data, context.req.user.user_id);
   }
-  //Удаление всех организации
-  @Mutation(() => Boolean)
-  async COMPANY_removeAll(): Promise<boolean> {
-    return await this.companyService.removeAll();
-  }
-  //Получение всех организации
-  @Query(() => [CompaniesEntity]) //TODO Служебный запрос, незащищенный
-  async SUPPORT_getAllCompanies(): Promise<CompaniesEntity[]> {
-    return await this.Companies.find();
-  }
+
   //Получение всех организации, на которые есть у пользователя права
-  @Query(() => [CompaniesEntity]) //TODO Служебный запрос, незащищенный
+  @Query(() => [CompaniesEntity])
   @UseGuards(JwtAuthGuard)
   async COMPANY_getAll(@Context() context): Promise<CompaniesEntity[]> {
     const result = await this.companyService.getAll(context.req.user.user_id);

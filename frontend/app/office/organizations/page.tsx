@@ -54,7 +54,10 @@ const Organizations = () => {
       <Interface page={"organizations"} create={setIsModalOpen} />
       <Table dataSource={dataSource} columns={columns} pagination={false} />
       {isModalOpen && (
-        <ModalCreateOrganization setIsModalOpen={setIsModalOpen} />
+        <ModalCreateOrganization
+          setIsModalOpen={setIsModalOpen}
+          setDataSource={setDataSource}
+        />
       )}
     </>
   );

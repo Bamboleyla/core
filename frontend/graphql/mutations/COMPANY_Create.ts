@@ -17,16 +17,24 @@ export interface ICreateCompany_params {
   apartment: string | null; //Номер квартиры в которой находится организация
 }
 
-interface ICreateCompany_response {
-  COMPANY_create: { id: string };
+interface IResponse {
+  COMPANY_create: {
+    id: number; //Идентификатор организации в БД
+    name: string; //Название организации
+    inn: string; //ИНН организации
+  }[];
 }
 
 const query = gql`
   mutation COMPANY_create($data: CreateCompanyInput!) {
-    COMPANY_create(data: $data)
+    COMPANY_create(data: $data) {
+      id
+      name
+      inn
+    }
   }
 `;
-/**Запрос создает новую организацию и возвращает true если регистрация прошла успешно и false если что-то не так
+/**Запрос создает новую организацию и если регистрация прошла успешно, возвращает новый список с организациями и false если что-то не так
  *
  * @param params объект с данными для регистрации
  * @returns true если регистрация прошла успешно,false если произошла ошибка
@@ -34,12 +42,10 @@ const query = gql`
 export const COMPANY_create = async (params: ICreateCompany_params) => {
   try {
     //Посылаем запрос
-    const result = await client.request<ICreateCompany_response>(query, {
+    const { COMPANY_create } = await client.request<IResponse>(query, {
       data: params,
     });
-    console.log(result);
-    //Всё хорошо
-    return true;
+    return COMPANY_create;
   } catch (error: any) {
     console.error(error);
     //Сообщаем о ошибке пользователю
