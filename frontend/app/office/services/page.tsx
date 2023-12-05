@@ -1,15 +1,10 @@
+"use client";
 import { Table } from "antd";
-import type { ColumnsType } from "antd/es/table";
 import { Interface } from "../interface";
+import { useState } from "react";
+import { ModalCreateService } from "./modalCreateService";
 
-interface DataType {
-  key: React.ReactNode;
-  name: React.JSX.Element | string;
-  price?: number;
-  children?: DataType[];
-}
-
-const columns: ColumnsType<DataType> = [
+const columns = [
   {
     title: "Наименование",
     dataIndex: "name",
@@ -22,7 +17,7 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
+const data = [
   {
     key: 0,
     name: <strong>Услуги</strong>,
@@ -59,10 +54,20 @@ const data: DataType[] = [
 ];
 
 const Services: React.FC = () => {
+  //Инициализируем состояние модального окна, которое регулирует отображение модального окна
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  //Инициализируем состояние данных таблицы
+  const [dataSource, setDataSource] = useState([{ key: 1, name: "", INN: "" }]);
   return (
     <>
-      <Interface page={"services"} />
+      <Interface page={"services"} create={setIsModalOpen} />
       <Table columns={columns} dataSource={data} pagination={false} />
+      {isModalOpen && (
+        <ModalCreateService
+          setIsModalOpen={setIsModalOpen}
+          setDataSource={setDataSource}
+        />
+      )}
     </>
   );
 };

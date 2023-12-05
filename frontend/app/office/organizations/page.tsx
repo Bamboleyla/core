@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { ModalCreateOrganization } from "./modalCreateOrganization";
 import { COMPANIES_getMyCompanies } from "@/graphql/queries/COMPANY_getAll";
 //Страница списка организации
-const Organizations = () => {
+const Organizations: React.FC = () => {
   //Инициализируем состояние модального окна, которое регулирует отображение модального окна
   const [isModalOpen, setIsModalOpen] = useState(false);
   //Инициализируем состояние данных таблицы
