@@ -5,16 +5,10 @@ import { CreateCompanyInput } from '../dto/create-input';
 import { CompaniesEntity } from '../entities/company.entities';
 import { CompanyService } from '../services/company.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 
 @Resolver('Company')
 export class CompanyResolver {
-  constructor(
-    @InjectRepository(CompaniesEntity)
-    private readonly Companies: Repository<CompaniesEntity>,
-    private readonly companyService: CompanyService
-  ) {}
+  constructor(private readonly companyService: CompanyService) {}
 
   //Создание новой организации
   @Mutation(() => [CompaniesEntity])

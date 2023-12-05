@@ -7,10 +7,7 @@ import { CompanyResolver } from './resolvers/company.resolver';
 import { UserEntity } from 'src/users/entities/user.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([CompaniesEntity]),
-    TypeOrmModule.forFeature([UserEntity]),
-  ],
+  imports: [TypeOrmModule.forFeature([CompaniesEntity, UserEntity])],
   providers: [CompanyService, CompanyResolver],
 })
 export class CompanyModule {}
