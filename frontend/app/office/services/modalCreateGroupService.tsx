@@ -48,8 +48,8 @@ interface Props {
     }[]
   ) => void; // Инициализируем состояние данных таблицы
 }
-//Модальное окно с формой для создания новой услуги
-export const ModalCreateService = ({
+//Модальное окно с формой для создания новой группы услуг
+export const ModalCreateGroupService = ({
   setIsModalOpen,
   setDataSource,
 }: Props) => {
@@ -91,7 +91,7 @@ export const ModalCreateService = ({
   return (
     <Modal
       open
-      title="Заполните форму, чтобы создать новую услугу"
+      title="Заполните форму, чтобы создать новую группу услуг"
       onOk={handleOk}
       onCancel={() => setIsModalOpen(false)}
       okType="default"
@@ -103,14 +103,14 @@ export const ModalCreateService = ({
     >
       <Form
         form={form}
-        name="Create Service"
+        name="Create Group Service"
         onFieldsChange={handleFormFieldsChange}
         onFinishFailed={() => setHasErrors(true)}
         autoComplete="off"
         className="mx-auto flex flex-col items-center mt-20 sm:mt-3 md:mt-20"
       >
         <Form.Item<FieldType>
-          label="Название услуги"
+          label="Название группы услуг"
           name="name"
           className="w-4/6 sm:w-5/12 lg:w-3/12 2xl:w-96"
           rules={[
@@ -123,7 +123,7 @@ export const ModalCreateService = ({
           <Input placeholder="Введите название" />
         </Form.Item>
         <Form.Item<FieldType>
-          label="Группа услуг"
+          label="В какой группе создать новую группу услуг"
           name="group"
           className="w-4/6 sm:w-5/12 lg:w-3/12 2xl:w-96"
           rules={[
@@ -134,32 +134,6 @@ export const ModalCreateService = ({
           ]}
         >
           <TreeSelect treeData={data} placeholder="Выберите группу услуг" />
-        </Form.Item>
-        <Form.Item<FieldType>
-          label="Цена"
-          name="price"
-          rules={[
-            {
-              required: true,
-              message: "Укажите цену",
-            },
-            {
-              pattern: /^(?!-)\d/,
-              message: "Цена не может быть отрицательной",
-            },
-            {
-              pattern: /^(?!-)(?:[0-9]+\.[0-9]{2,}|[1-9][0-9]*)$/,
-              message: "Цена не может содержать значение меньше сотой",
-            },
-          ]}
-          className="w-4/6 sm:w-5/12 lg:w-3/12 2xl:w-96"
-        >
-          <InputNumber
-            addonAfter="руб."
-            placeholder="Введите цену"
-            formatter={(value) => (value ? `${value}`.replace(",", ".") : "")}
-            parser={(value) => (value ? `${value}`.replace(",", ".") : "")}
-          />
         </Form.Item>
       </Form>
     </Modal>

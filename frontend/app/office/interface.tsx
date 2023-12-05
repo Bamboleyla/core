@@ -1,17 +1,19 @@
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import { Button, Flex, Tooltip } from "antd";
 
 interface Props {
   page: "clients" | "suppliers" | "products" | "services" | "organizations";
-  create: (isModalOpen: boolean) => void;
+  create: (setCreateModalOpen: boolean) => void; //функция которая открывает модальное окно для создания нового элемента (клиента, сервиса, продукта и.т.д)
+  createGroup?: (setCreateGroupModalOpen: boolean) => void; //функция которая открывает модальное окно для создания новой группы (клиента, сервиса, продукта и.т.д), у некоторых страниц может отсутствовать
 }
 
-export const Interface = ({ page, create }: Props) => {
+export const Interface = ({ page, create, createGroup }: Props) => {
   const config = {
     create: "",
     path: {
       create: "create",
     },
+    createGroup: "",
   };
 
   switch (page) {
@@ -20,6 +22,7 @@ export const Interface = ({ page, create }: Props) => {
       break;
     case "services":
       config.create = "Создать новую услугу";
+      config.createGroup = "Создать новую группу услуг";
       break;
     case "organizations":
       config.create = "Создать новую организацию";
@@ -37,6 +40,18 @@ export const Interface = ({ page, create }: Props) => {
           }
         />
       </Tooltip>
+      {createGroup && (
+        <Tooltip title={`${config.createGroup}`}>
+          <Button
+            icon={
+              <UnorderedListOutlined
+                style={{ color: "white" }}
+                onClick={() => createGroup(true)}
+              />
+            }
+          />
+        </Tooltip>
+      )}
     </Flex>
   );
 };

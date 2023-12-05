@@ -3,6 +3,7 @@ import { Table } from "antd";
 import { Interface } from "../interface";
 import { useState } from "react";
 import { ModalCreateService } from "./modalCreateService";
+import { ModalCreateGroupService } from "./modalCreateGroupService";
 
 const columns = [
   {
@@ -54,17 +55,28 @@ const data = [
 ];
 
 const Services: React.FC = () => {
-  //Инициализируем состояние модального окна, которое регулирует отображение модального окна
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  //Инициализируем состояния модальных окон, которое регулируют отображение модальных окон
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
   //Инициализируем состояние данных таблицы
   const [dataSource, setDataSource] = useState([{ key: 1, name: "", INN: "" }]);
   return (
     <>
-      <Interface page={"services"} create={setIsModalOpen} />
+      <Interface
+        page={"services"}
+        create={setIsCreateModalOpen}
+        createGroup={setIsCreateGroupModalOpen}
+      />
       <Table columns={columns} dataSource={data} pagination={false} />
-      {isModalOpen && (
+      {isCreateModalOpen && (
         <ModalCreateService
-          setIsModalOpen={setIsModalOpen}
+          setIsModalOpen={setIsCreateModalOpen}
+          setDataSource={setDataSource}
+        />
+      )}
+      {isCreateGroupModalOpen && (
+        <ModalCreateGroupService
+          setIsModalOpen={setIsCreateGroupModalOpen}
           setDataSource={setDataSource}
         />
       )}
