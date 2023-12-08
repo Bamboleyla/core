@@ -1,13 +1,5 @@
 "use client";
-import {
-  Form,
-  Input,
-  InputNumber,
-  Modal,
-  Select,
-  TreeSelect,
-  notification,
-} from "antd";
+import { Form, Input, Modal, TreeSelect, notification } from "antd";
 import { useState } from "react";
 
 const data = [
@@ -47,6 +39,7 @@ interface Props {
       INN: string; // ИНН организации
     }[]
   ) => void; // Инициализируем состояние данных таблицы
+  companyID: string; // Идентификатор организации
 }
 //Модальное окно с формой для создания новой группы услуг
 export const ModalCreateGroupService = ({

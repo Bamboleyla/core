@@ -31,24 +31,12 @@ export const Interface = ({ page, create, createGroup }: Props) => {
   return (
     <Flex gap="small" wrap="wrap" className="p-2">
       <Tooltip title={`${config.create}`}>
-        <Button
-          icon={
-            <PlusOutlined
-              style={{ color: "white" }}
-              onClick={() => create(true)}
-            />
-          }
-        />
+        <Button icon={<PlusOutlined onClick={() => create(true)} />} />
       </Tooltip>
       {createGroup && (
         <Tooltip title={`${config.createGroup}`}>
           <Button
-            icon={
-              <UnorderedListOutlined
-                style={{ color: "white" }}
-                onClick={() => createGroup(true)}
-              />
-            }
+            icon={<UnorderedListOutlined onClick={() => createGroup(true)} />}
           />
         </Tooltip>
       )}

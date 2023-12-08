@@ -4,7 +4,6 @@ import {
   Input,
   InputNumber,
   Modal,
-  Select,
   TreeSelect,
   notification,
 } from "antd";
@@ -47,11 +46,13 @@ interface Props {
       INN: string; // ИНН организации
     }[]
   ) => void; // Инициализируем состояние данных таблицы
+  companyID: string; // Идентификатор организации
 }
 //Модальное окно с формой для создания новой услуги
 export const ModalCreateService = ({
   setIsModalOpen,
   setDataSource,
+  companyID,
 }: Props) => {
   //Инициализируем форму
   const [form] = Form.useForm();

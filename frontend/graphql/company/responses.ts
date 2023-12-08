@@ -5,6 +5,12 @@ export interface IGetAll_response {
     inn: string; //ИНН организации
   }[];
 }
+export interface IGetTitlesForTabs_response {
+  COMPANY_getAll: {
+    id: number; //Идентификатор организации в БД
+    name: string; //Название организации
+  }[];
+}
 
 export interface ICreate_response {
   COMPANY_create: {

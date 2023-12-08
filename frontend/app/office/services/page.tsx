@@ -1,9 +1,11 @@
 "use client";
-import { Table } from "antd";
+import { Table, Tabs } from "antd";
+import type { TabsProps } from "antd";
 import { Interface } from "../interface";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ModalCreateService } from "./modalCreateService";
 import { ModalCreateGroupService } from "./modalCreateGroupService";
+import { CompanyGraphql } from "@/graphql/company";
 
 const columns = [
   {
@@ -58,8 +60,37 @@ const Services: React.FC = () => {
   //Инициализируем состояния модальных окон, которое регулируют отображение модальных окон
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
+  //Инициализируем состояние Tabs
+  const [items, setItems] = useState<TabsProps["items"]>([]);
   //Инициализируем состояние данных таблицы
-  const [dataSource, setDataSource] = useState([{ key: 1, name: "", INN: "" }]);
+  const [dataSource, setDataSource] = useState([]);
+  //Хранит данные о идентификаторе организации с которой в данный момент работает пользователь
+  const [companyID, setCompanyID] = useState("");
+
+  useEffect(() => {
+    //Создаем данные для Tabs, в каждый таб помешаем таблицу
+    const initTabs = async () => {
+      //Получаем заголовки для Tabs
+      const titles = await CompanyGraphql.getTitlesForTabs();
+      if (titles) {
+        titles.forEach(
+          //Добавляем к заголовкам таблицы с услугами для именно этого таба
+          (title) =>
+            (title.children = (
+              <Table
+                columns={columns}
+                dataSource={dataSource}
+                pagination={false}
+              />
+            ))
+        );
+      }
+      setItems(titles);
+    };
+
+    initTabs();
+  }, []);
+
   return (
     <>
       <Interface
@@ -67,17 +98,25 @@ const Services: React.FC = () => {
         create={setIsCreateModalOpen}
         createGroup={setIsCreateGroupModalOpen}
       />
-      <Table columns={columns} dataSource={data} pagination={false} />
+      {items?.length !== 0 && (
+        <Tabs
+          defaultActiveKey="1"
+          items={items}
+          onChange={(key) => setCompanyID(key)}
+        />
+      )}
       {isCreateModalOpen && (
         <ModalCreateService
           setIsModalOpen={setIsCreateModalOpen}
-          setDataSource={setDataSource}
+          setDataSource={console.log}
+          companyID={companyID}
         />
       )}
       {isCreateGroupModalOpen && (
         <ModalCreateGroupService
           setIsModalOpen={setIsCreateGroupModalOpen}
-          setDataSource={setDataSource}
+          setDataSource={console.log}
+          companyID={companyID}
         />
       )}
     </>

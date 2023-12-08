@@ -1,7 +1,13 @@
 import { client } from "@/graphql/client";
 import { gql } from "graphql-request";
+import type { TabsProps } from "antd";
+
 import { errorHandler } from "../handlers";
-import { ICreate_response, IGetAll_response } from "./responses";
+import {
+  ICreate_response,
+  IGetAll_response,
+  IGetTitlesForTabs_response,
+} from "./responses";
 import { ICreate_params } from "./params";
 
 class Request {
@@ -21,6 +27,32 @@ class Request {
     `;
     try {
       return await client.request<IGetAll_response>(query);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  /**Запрос на получение заголовков для Tabs с услугами организаций
+   *
+   * @returns Список заголовков организаций для Tabs
+   */
+  async getTitlesForTabs(): Promise<TabsProps["items"]> {
+    const query = gql`
+      query COMPANY_getAll {
+        COMPANY_getAll {
+          id
+          name
+        }
+      }
+    `;
+    try {
+      //делаем запрос, чтобы получить список названий и идентификаторов организаций пользователя
+      const data = await client.request<IGetTitlesForTabs_response>(query);
+      //преобразовываем полученные данные в нужный формат для Tabs, затем возвращаем их
+      return await data.COMPANY_getAll.map((compony) => ({
+        key: compony.id.toString(),
+        label: compony.name,
+      }));
     } catch (error) {
       console.error(error);
     }
