@@ -1,5 +1,5 @@
 "use client";
-import { COMPANY_create } from "@/graphql/mutations/COMPANY_Create";
+import { CompanyGraphql } from "@/graphql/company";
 import { Form, Input, Modal, Radio, notification } from "antd";
 import { useState } from "react";
 
@@ -37,7 +37,7 @@ export const ModalCreateOrganization = ({
         //Отправляем запрос для создания организации и получения новых данных для таблицы
         const create = async () => {
           //Делаем запрос
-          const result = await COMPANY_create(values);
+          const result = await CompanyGraphql.create(values);
           //Если есть результат
           if (result) {
             //То преобразуем полученные данные в структуру для таблицы

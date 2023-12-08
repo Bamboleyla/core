@@ -3,12 +3,8 @@ import { Button, Form, Input } from "antd";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-
-import {
-  AUTH_createUser,
-  ICreateUser_params,
-} from "@/graphql/mutations/AUTH_CreateUser";
-import { AUTH_logIn, ILogIn_params } from "@/graphql/queries/AUTH_LogIn";
+import { ICreateUser_params, ILogIn_params } from "@/graphql/auth/params";
+import { AuthGraphql } from "@/graphql/auth";
 
 type FieldType = {
   firstName?: string;
@@ -48,8 +44,8 @@ export const LogSignIn = ({ type }: Props) => {
     ) {
       const result =
         type === "singIn"
-          ? await AUTH_createUser(data as ICreateUser_params)
-          : await AUTH_logIn(data as ILogIn_params);
+          ? await AuthGraphql.createUser(data as ICreateUser_params)
+          : await AuthGraphql.logIn(data as ILogIn_params);
       result && router.push("/office");
     }
     data && fetchData(type, data);

@@ -5,7 +5,7 @@ import { Start } from "@/components/Start";
 import { WhatIs } from "@/components/WhatIs";
 import { WhoIsItFor } from "@/components/WhoIsItFor";
 import { YouWillBeAble } from "@/components/YouWillBeAble";
-import { AUTH_token } from "@/graphql/queries/AUTH_Token";
+import { AuthGraphql } from "@/graphql/auth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -16,7 +16,7 @@ const Welcome = () => {
   useEffect(() => {
     //Проверяем авторизован ли пользователь, если да, то переводим на страницу офиса, если нет то нечего не делаем
     const isUserAuthorized = async () => {
-      const result = await AUTH_token();
+      const result = await AuthGraphql.getToken();
       result && router.push("/office");
     };
     isUserAuthorized();

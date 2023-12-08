@@ -3,7 +3,7 @@ import { Table } from "antd";
 import { Interface } from "../interface";
 import { useEffect, useState } from "react";
 import { ModalCreateOrganization } from "./modalCreateOrganization";
-import { COMPANIES_getMyCompanies } from "@/graphql/queries/COMPANY_getAll";
+import { CompanyGraphql } from "@/graphql/company";
 //Страница списка организации
 const Organizations: React.FC = () => {
   //Инициализируем состояние модального окна, которое регулирует отображение модального окна
@@ -28,7 +28,7 @@ const Organizations: React.FC = () => {
   //Получаем данные список организаций для таблицы
   useEffect(() => {
     //Делаем запрос на получение компаний
-    COMPANIES_getMyCompanies().then((result) => {
+    CompanyGraphql.getAll().then((result) => {
       //Если получили данные
       if (result) {
         //То преобразуем полученные данные в структуру для таблицы

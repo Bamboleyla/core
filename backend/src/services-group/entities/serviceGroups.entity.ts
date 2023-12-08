@@ -13,6 +13,9 @@ export class ServiceGroupsEntity {
   @Column()
   name: string; //Название группы услуг
 
-  @Field(() => [ServiceGroupsEntity, ServiceEntity], { nullable: true })
+  @Field(() => [ServiceGroupsEntity, ServiceEntity], {
+    nullable: true,
+    defaultValue: [],
+  })
   children: (ServiceGroupsEntity | ServiceEntity)[];
 }

@@ -15,6 +15,7 @@ type CompaniesEntity {
   inn: String
   name: String!
   region: String
+  services: [ServiceGroupsEntity!]
   settlement: String
   staff: StaffMembers!
   street: String
