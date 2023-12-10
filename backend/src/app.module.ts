@@ -6,7 +6,6 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { ServiceGroupsModule } from './services-group/serviceGroups.module';
 import { CompanyModule } from './company/company.module';
 import { ServicesModule } from './services/services.module';
 
@@ -37,7 +36,6 @@ import { ServicesModule } from './services/services.module';
     }),
     UsersModule,
     AuthModule,
-    ServiceGroupsModule,
     ServicesModule,
     CompanyModule,
   ],

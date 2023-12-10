@@ -14,8 +14,7 @@ import { CompaniesEntity } from 'src/company/entities/company.entities';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserEntity]),
-    TypeOrmModule.forFeature([CompaniesEntity]),
+    TypeOrmModule.forFeature([UserEntity, CompaniesEntity]),
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

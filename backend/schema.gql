@@ -15,7 +15,6 @@ type CompaniesEntity {
   inn: String
   name: String!
   region: String
-  services: [ServiceGroupsEntity!]
   settlement: String
   staff: StaffMembers!
   street: String
@@ -68,15 +67,8 @@ type Query {
   AUTH_logIn(LogInInput: LogInInput!): LogInResponse!
   AUTH_token: Boolean!
   COMPANY_getAll: [CompaniesEntity!]!
-  SERVICE_GROUPS_getAll: [ServiceGroupsEntity!]!
   USERS_getAll: [UserEntity!]!
   USER_get(id: ID!): UserEntity!
-}
-
-type ServiceGroupsEntity {
-  children: [ServiceGroupsEntity!]
-  id: ID!
-  name: String!
 }
 
 type StaffMembers {

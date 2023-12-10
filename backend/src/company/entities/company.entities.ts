@@ -9,8 +9,6 @@ import {
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { StaffMembers } from './staffMembers.entities';
-import { ServiceGroupsEntity } from 'src/services-group/entities/serviceGroups.entity';
-import { ServiceEntity } from 'src/services/entities/service.entities';
 
 @ObjectType()
 @Entity('companies')
@@ -82,7 +80,4 @@ export class CompaniesEntity {
   @Column({ type: 'json' })
   @Field(() => StaffMembers)
   staff: StaffMembers; //Сотрудники в организации
-
-  @Field(() => [ServiceGroupsEntity], { nullable: true, defaultValue: [] })
-  services: ServiceGroupsEntity[] | ServiceEntity[]; //Дерево предоставляемых услуг в организации
 }
